@@ -1,0 +1,163 @@
+//django模型有关命令
+Python manage.py validate 命令检查你的模型的语法和逻辑是否正确
+Python manage.py sqlall services 命令并没有在数据库中真正创建数据表，只是把SQL语句段打印出来
+Python manage.py syncdb 命令是同步你的模型到数据库的一个简单方法
+
+d_user	// 用户表 前缀：u
+id
+s_id // 学生id
+qq_id	// qq id
+wx_id	// 微信id
+swb_id	// 新浪微博id
+db_id	// 豆瓣id
+twb_id	// 腾讯微博id
+uid	// 用户名
+upw	// 用户密码
+unickname	// 用户昵称
+
+操作逻辑：用户登录的过程中首先在用户表中检查用户名是否存在，如果存在，然后筛选用户名和密码，如果存在的话，通过学生id获取课表、分数等信息。
+如果用户表中没有用户名，便去教务系统更新数据，将信息放到学生信息表，课表信息放到课表表。同时将账号密码放到用户表，（建议学生信息表的账号密码房明文，用户表的密码放密文），用户表绑定学生id。
+如果账号密码不同，尝试去教务系统登录，如果登录成功，更新学生信息表和用户表的学号和密码，如果不成功返回账号密码错误。
+所有操作对学生信息表透明。
+
+d_student	// 学生信息表 前缀：s
+id
+snumber	//学号
+spasswd //密码
+sname //姓名
+snspell //姓名拼音
+sename //英文姓名
+soldname //曾用名
+scard //身份证号
+ssex //性别
+sstype //学生类别
+ssstype //特殊学生类别
+sscstate //学籍状态
+sctype //收费类别
+snation //民族
+snplace //籍贯
+sbirthday //出生日期
+spstatus //政治面貌
+searea //考区
+sgschool //毕业学校
+sfresult //高考成绩
+    stuinfo['xm'] = str(data1[1]).decode('utf-8')
+    stuinfo['xh'] = str(data1[0]).decode('utf-8')
+    stuinfo['xmpy'] = str(data2[0]).decode('utf-8')
+    stuinfo['ywxm'] = str(data2[1]).decode('utf-8')
+    stuinfo['cym'] = str(data2[2]).decode('utf-8')
+    stuinfo['sfzh'] = str(data2[3]).decode('utf-8')
+    stuinfo['xb'] = str(data2[4]).decode('utf-8')
+    stuinfo['xslb'] = str(data2[5]).decode('utf-8')
+    stuinfo['tsxslx'] = str(data2[6]).decode('utf-8')
+    stuinfo['xjzt'] = str(data2[7]).decode('utf-8')
+    stuinfo['sflx'] = str(data2[8]).decode('utf-8')
+    stuinfo['mz'] = str(data2[9]).decode('utf-8')
+    stuinfo['jg'] = str(data2[10]).decode('utf-8')
+    stuinfo['csrq'] = str(data2[11]).decode('utf-8')
+    stuinfo['zzmm'] = str(data2[12]).decode('utf-8')
+    stuinfo['kq'] = str(data2[13]).decode('utf-8')
+    stuinfo['byzx'] = str(data2[14]).decode('utf-8')
+    stuinfo['gkzf'] = str(data2[15]).decode('utf-8')
+    stuinfo['lqh'] = str(data2[16]).decode('utf-8')
+    stuinfo['gkksh'] = str(data2[17]).decode('utf-8')
+    stuinfo['rxksyz'] = str(data2[18]).decode('utf-8')
+    stuinfo['txdz'] = str(data2[19]).decode('utf-8')
+    stuinfo['yb'] = str(data2[20]).decode('utf-8')
+    stuinfo['jzxx'] = str(data2[21]).decode('utf-8')
+    stuinfo['rxrq'] = str(data2[22]).decode('utf-8')
+    stuinfo['xs'] = str(data2[23]).decode('utf-8')
+    stuinfo['zy'] = str(data2[24]).decode('utf-8')
+    stuinfo['zyfx'] = str(data2[25]).decode('utf-8')
+    stuinfo['nj'] = str(data2[26]).decode('utf-8')
+    stuinfo['bj'] = str(data2[27]).decode('utf-8')
+    stuinfo['sfyxj'] = str(data2[28]).decode('utf-8')
+    stuinfo['sfygjxj'] = str(data2[29]).decode('utf-8')
+    stuinfo['xq'] = str(data2[30]).decode('utf-8')
+    stuinfo['ydf'] = str(data2[31]).decode('utf-8')
+    stuinfo['wyyz'] = str(data2[32]).decode('utf-8')
+    stuinfo['ssdz'] = str(data2[33]).decode('utf-8')
+    stuinfo['ycsj'] = str(data2[34]).decode('utf-8')
+    stuinfo['pycc'] = str(data2[35]).decode('utf-8')
+    stuinfo['pyfs'] = str(data2[36]).decode('utf-8')
+    stuinfo['flfx'] = str(data2[37]).decode('utf-8')
+    stuinfo['sflx'] = str(data2[38]).decode('utf-8')
+    stuinfo['bz'] = str(data2[39]).decode('utf-8')
+    stuinfo['bz1'] = str(data2[40]).decode('utf-8')
+    stuinfo['bz2'] = str(data2[41]).decode('utf-8')
+    stuinfo['bz3'] = str(data2[42]).decode('utf-8')
+
+......
+
+
+d_qqinfo	// qq信息表 前缀：qq
+id
+qqinfo...
+
+d_loginfo // 登陆信息 前缀：l
+id
+u_id // 用户id
+lip //ip地址
+llogintime //登陆时间
+llogouttime // 退出时间
+lticket //ticket
+lsession //session
+
+d_grade	// 成绩缓存表 前缀：g
+id
+s_id //学生id
+gcnum //课程号	----
+gsnum //课序号	----
+gcname //课程名	----
+gcredit //学分
+gcattr //课程属性
+ggrade //成绩
+
+d_bxqgrade	// 本学期成绩缓存 前缀：bxq
+id
+g_id //方案成绩id
+g_time //有效时间
+
+d_schedule	// 课表 前缀：sc
+id
+scptype //培养方案
+sccnum //课程号
+scsnum //课序号
+sccname //课程名
+sccredit //学分
+sccattr //课程属性
+scetype //考试类型
+scteacher //教师
+scxdtype //修读方式
+screadt //选课状态
+sczhou //周次   --------修改为 scstartw开始周   scendw结束周
+scweek //星期   -----第几周上课 
+scjie //节次
+scjcount //节数  --去掉
+sccampus //校区
+sctbuilding //教学楼
+scclassroom //教室
+
+d_teacher		// 老师表 前缀：t
+id
+tname // 老师名
+tprofile // 老师简介
+
+
+d_evaluate	// 教师评论 前缀：te
+id
+t_id // 老师id
+s_id // 学生id	----
+sc_id // 评论课程id
+sc_cnum // 评论课程课程号
+sc_snum // 评论课程课序号
+ticket //ticket
+tecontent //评价内容
+tetime //评价时间
+tenickname //昵称
+teisname //是否实名
+
+d_feedback //反馈接口
+id
+backcontents  //反馈内容
+contact  //联系方式
